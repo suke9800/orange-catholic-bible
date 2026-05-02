@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>오렌지 카톨릭 성경</title>
+    <meta
+      name="description"
+      content="오렌지 카톨릭 성경을 위한 신성한 고대 사원형 독서 사이트"
+    />
+    <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <canvas id="sand-canvas" aria-hidden="true"></canvas>
+    <div class="temple-sky" aria-hidden="true">
+      <div class="sun-disc"></div>
+      <div class="wing wing-left"></div>
+      <div class="wing wing-right"></div>
+      <div class="pyramid pyramid-left"></div>
+      <div class="pyramid pyramid-right"></div>
+      <div class="obelisk obelisk-left"></div>
+      <div class="obelisk obelisk-right"></div>
+    </div>
+
+    <div class="progress" aria-hidden="true">
+      <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <header class="site-header">
+      <a class="brand-mark" href="#top" aria-label="오렌지 카톨릭 성경 처음으로">
+        <span class="brand-sigil">OC</span>
+        <span>오렌지 카톨릭 성경</span>
+      </a>
+      <nav class="header-actions" aria-label="상단 이동">
+        <label class="language-picker">
+          <span class="sr-only">언어 선택</span>
+          <select id="languageSelect" aria-label="번역 언어 선택"></select>
+        </label>
+        <a href="#scripture">본문</a>
+        <a href="#toc">목차</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="glyph-band glyph-band-top" aria-hidden="true">
+          <span>𓂀</span><span>𓇳</span><span>𓊹</span><span>𓋹</span><span>𓉐</span>
+          <span>𓂀</span><span>𓇳</span><span>𓊹</span><span>𓋹</span><span>𓉐</span>
+        </div>
+        <div class="hero-copy">
+          <p class="kicker">The Orange Covenant</p>
+          <h1 id="hero-title">오렌지 카톨릭 성경</h1>
+          <p class="hero-line">영혼을 욕되게 하지 말라</p>
+          <p class="hero-line alt">인간의 마음과 유사한 기계를 만들지 말지어다</p>
+        </div>
+        <div class="glyph-band glyph-band-bottom" aria-hidden="true">
+          <span>𓃭</span><span>𓆣</span><span>𓏏</span><span>𓊽</span><span>𓎛</span>
+          <span>𓃭</span><span>𓆣</span><span>𓏏</span><span>𓊽</span><span>𓎛</span>
+        </div>
+      </section>
+
+      <section class="reading-shell" id="scripture">
+        <aside class="toc-panel" id="toc" aria-labelledby="toc-title">
+          <div class="toc-inner">
+            <p class="panel-kicker">Sacred Index</p>
+            <div class="toc-title-row">
+              <h2 id="toc-title">목차</h2>
+              <label class="language-picker mobile-language">
+                <span class="sr-only">언어 선택</span>
+                <select id="languageSelectPanel" aria-label="번역 언어 선택"></select>
+              </label>
+            </div>
+            <label class="search-wrap">
+              <span class="search-icon" aria-hidden="true"></span>
+              <input id="searchInput" type="search" placeholder="본문 검색" autocomplete="off" />
+            </label>
+            <p class="search-count" id="searchCount"></p>
+            <div class="toc-list" id="tocList"></div>
+          </div>
+        </aside>
+
+        <article class="scripture-panel" aria-live="polite">
+          <div class="reader-toolbar">
+            <button class="tool-button" id="decreaseText" type="button" aria-label="글자 작게">
+              <span aria-hidden="true">A-</span>
+            </button>
+            <button class="tool-button" id="increaseText" type="button" aria-label="글자 크게">
+              <span aria-hidden="true">A+</span>
+            </button>
+            <button class="tool-button mode-button" id="focusMode" type="button" aria-pressed="false">
+              집중
+            </button>
+          </div>
+          <div class="scripture-content" id="scriptureContent">
+            <div class="loading-block">
+              <span class="loading-sigil"></span>
+              <p>본문을 여는 중</p>
+            </div>
+          </div>
+        </article>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
