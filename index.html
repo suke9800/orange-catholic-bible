@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Serif:wght@500;600;700;800&family=Noto+Serif+Devanagari:wght@500;600;700&family=Noto+Serif+Display:wght@700;900&family=Noto+Serif+JP:wght@500;700;900&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260503-stone-ui" />
+    <link rel="stylesheet" href="styles.css?v=20260503-mobile-toc" />
   </head>
   <body>
     <canvas id="sand-canvas" aria-hidden="true"></canvas>
@@ -86,6 +86,9 @@
 
         <article class="scripture-panel" aria-live="polite">
           <div class="reader-toolbar">
+            <button class="tool-button mode-button mobile-toc-toggle" id="tocToggle" type="button" aria-controls="toc" aria-expanded="false">
+              목차
+            </button>
             <button class="tool-button" id="decreaseText" type="button" aria-label="글자 작게">
               <span aria-hidden="true">A-</span>
             </button>

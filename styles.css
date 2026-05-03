@@ -697,6 +697,10 @@ input {
   cursor: pointer;
 }
 
+.mobile-toc-toggle {
+  display: none;
+}
+
 .tool-button:hover,
 .header-actions a:hover {
   border-color: rgba(46, 169, 159, 0.74);
@@ -1123,7 +1127,13 @@ input {
   .toc-panel {
     position: relative;
     top: auto;
-    max-height: none;
+    display: none;
+    max-height: min(68svh, 620px);
+    overflow: auto;
+  }
+
+  body.toc-open .toc-panel {
+    display: block;
   }
 
   .toc-list {
@@ -1132,6 +1142,19 @@ input {
 
   .reader-toolbar {
     top: 78px;
+    justify-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .mobile-toc-toggle {
+    display: inline-grid;
+  }
+
+  body.toc-open .mobile-toc-toggle {
+    border-color: rgba(46, 169, 159, 0.78);
+    background:
+      linear-gradient(135deg, rgba(46, 169, 159, 0.22), transparent 48%),
+      rgba(46, 169, 159, 0.16);
   }
 }
 

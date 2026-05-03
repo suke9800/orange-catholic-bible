@@ -6,6 +6,7 @@ const progressBar = document.getElementById("progressBar");
 const increaseText = document.getElementById("increaseText");
 const decreaseText = document.getElementById("decreaseText");
 const focusMode = document.getElementById("focusMode");
+const tocToggle = document.getElementById("tocToggle");
 const bookMode = document.getElementById("bookMode");
 const canvas = document.getElementById("sand-canvas");
 const languageSelect = document.getElementById("languageSelect");
@@ -286,6 +287,9 @@ function setBookMode(active) {
 }
 
 function handleTocLinkClick(event) {
+  if (window.innerWidth <= 980) {
+    setMobileToc(false);
+  }
   if (!bookModeActive) return;
   const target = event.currentTarget.dataset.target;
   if (!bookHeadingPages.has(target)) return;
@@ -293,6 +297,11 @@ function handleTocLinkClick(event) {
   bookPageIndex = bookHeadingPages.get(target);
   renderBookSpread();
   bookReader.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+function setMobileToc(open) {
+  document.body.classList.toggle("toc-open", open);
+  tocToggle.setAttribute("aria-expanded", String(open));
 }
 
 function observeHeadings() {
@@ -509,6 +518,9 @@ languageSelectPanel.addEventListener("change", (event) => loadScripture(event.ta
 window.addEventListener("scroll", updateProgress, { passive: true });
 window.addEventListener("resize", fitHeroTitle, { passive: true });
 window.addEventListener("resize", () => {
+  if (window.innerWidth > 980) {
+    setMobileToc(false);
+  }
   if (!bookModeActive) return;
   window.clearTimeout(bookResizeTimer);
   bookResizeTimer = window.setTimeout(() => buildBookPages(), 160);
@@ -518,6 +530,9 @@ decreaseText.addEventListener("click", () => setReaderScale(readerScale - 0.06))
 focusMode.addEventListener("click", () => {
   const focused = document.body.classList.toggle("focused");
   focusMode.setAttribute("aria-pressed", String(focused));
+});
+tocToggle.addEventListener("click", () => {
+  setMobileToc(!document.body.classList.contains("toc-open"));
 });
 bookMode.addEventListener("click", () => setBookMode(!bookModeActive));
 bookReturn.addEventListener("click", () => {
