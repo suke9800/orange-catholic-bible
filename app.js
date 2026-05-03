@@ -24,6 +24,7 @@ const bookPrev = document.getElementById("bookPrev");
 const bookNext = document.getElementById("bookNext");
 const bookPageIndicator = document.getElementById("bookPageIndicator");
 const bookProgress = document.getElementById("bookProgress");
+const bookReturn = document.getElementById("bookReturn");
 
 let readerScale = 1;
 let searchableBlocks = [];
@@ -388,8 +389,9 @@ function applyLanguageChrome(language) {
   brandLink.setAttribute("aria-label", chrome.homeLabel || `${title} home`);
 
   if (chrome.kicker && heroKicker) heroKicker.textContent = chrome.kicker;
-  if (chrome.line1) heroLines[0].textContent = chrome.line1;
-  if (chrome.line2) heroLines[1].textContent = chrome.line2;
+  if (heroLines[0]) {
+    heroLines[0].textContent = chrome.line2 || chrome.line1 || "";
+  }
 
   requestAnimationFrame(fitHeroTitle);
   if (document.fonts) {
@@ -518,6 +520,10 @@ focusMode.addEventListener("click", () => {
   focusMode.setAttribute("aria-pressed", String(focused));
 });
 bookMode.addEventListener("click", () => setBookMode(!bookModeActive));
+bookReturn.addEventListener("click", () => {
+  setBookMode(false);
+  contentRoot.scrollIntoView({ behavior: "smooth", block: "start" });
+});
 bookPrev.addEventListener("click", () => turnBookPage(-1));
 bookNext.addEventListener("click", () => turnBookPage(1));
 bookSpread.addEventListener("click", (event) => {

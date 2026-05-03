@@ -300,8 +300,12 @@ input {
   padding: 10px 12px;
   transform: translateX(-50%);
   border: 1px solid rgba(229, 185, 91, 0.3);
-  background: rgba(20, 12, 9, 0.74);
-  box-shadow: 0 18px 54px rgba(0, 0, 0, 0.24);
+  background:
+    linear-gradient(90deg, rgba(229, 185, 91, 0.08), transparent 18% 82%, rgba(46, 169, 159, 0.08)),
+    rgba(20, 12, 9, 0.78);
+  box-shadow:
+    0 18px 54px rgba(0, 0, 0, 0.28),
+    inset 0 0 0 1px rgba(255, 240, 186, 0.06);
   backdrop-filter: blur(18px);
 }
 
@@ -330,11 +334,12 @@ input {
   aspect-ratio: 1;
   place-items: center;
   border: 1px solid rgba(229, 185, 91, 0.74);
-  border-radius: 50%;
+  border-radius: 0;
   color: #ffe8a5;
   background:
     radial-gradient(circle, rgba(242, 141, 46, 0.42), rgba(8, 37, 61, 0.76)),
     var(--lapis);
+  clip-path: polygon(14% 0, 86% 0, 100% 14%, 100% 86%, 86% 100%, 14% 100%, 0 86%, 0 14%);
   font-family: "Cinzel", Georgia, serif;
   font-size: 0.76rem;
 }
@@ -348,9 +353,13 @@ input {
 .language-picker select {
   min-height: 38px;
   border: 1px solid rgba(229, 185, 91, 0.34);
-  border-radius: 999px;
+  border-radius: 0;
   color: #f8e8c0;
-  background: rgba(255, 255, 255, 0.06);
+  background:
+    linear-gradient(135deg, rgba(255, 232, 164, 0.1), transparent 42%),
+    rgba(255, 255, 255, 0.06);
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  box-shadow: inset 0 0 0 1px rgba(255, 240, 186, 0.05);
 }
 
 .language-picker {
@@ -364,6 +373,7 @@ input {
   background:
     linear-gradient(45deg, transparent 50%, #f8e8c0 50%) calc(100% - 18px) 52% / 6px 6px no-repeat,
     linear-gradient(135deg, #f8e8c0 50%, transparent 50%) calc(100% - 13px) 52% / 6px 6px no-repeat,
+    linear-gradient(135deg, rgba(255, 232, 164, 0.1), transparent 42%),
     rgba(255, 255, 255, 0.06);
   cursor: pointer;
 }
@@ -411,12 +421,16 @@ input {
   content: "";
   position: absolute;
   inset: 18vh 7vw 7vh;
-  border: 1px solid rgba(229, 185, 91, 0.22);
+  border: 1px solid rgba(229, 185, 91, 0.28);
   border-block-width: 3px;
   background:
+    repeating-linear-gradient(90deg, rgba(229, 185, 91, 0.08) 0 1px, transparent 1px 46px),
     linear-gradient(90deg, rgba(18, 61, 100, 0.34), transparent 12% 88%, rgba(18, 61, 100, 0.34)),
     linear-gradient(180deg, rgba(255, 245, 213, 0.04), transparent 32%);
   clip-path: polygon(0 6%, 50% 0, 100% 6%, 100% 100%, 0 100%);
+  box-shadow:
+    inset 0 0 40px rgba(229, 185, 91, 0.08),
+    0 26px 80px rgba(0, 0, 0, 0.22);
 }
 
 .hero-copy {
@@ -464,7 +478,7 @@ input {
 
 .hero-line {
   display: block;
-  margin: 24px auto 0;
+  margin: 28px auto 0;
   width: min(960px, 100%);
   color: transparent;
   background: linear-gradient(180deg, #fff9de 0%, #f4d383 38%, #db7b24 72%, #fff0ba 100%);
@@ -483,12 +497,11 @@ input {
 }
 
 .hero-line.alt {
-  margin-top: 12px;
   background: linear-gradient(180deg, #effffb 0%, #94f0df 38%, #e0a14a 78%, #fff4bf 100%);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-stroke: 0.48px rgba(5, 52, 50, 0.72);
-  font-size: clamp(1rem, 2vw, 1.55rem);
+  font-size: clamp(1.12rem, 2.25vw, 1.82rem);
   text-shadow:
     0 1px 0 rgba(7, 37, 38, 0.82),
     0 0 18px rgba(46, 169, 159, 0.7),
@@ -531,9 +544,12 @@ input {
 .scripture-panel {
   border: 1px solid rgba(229, 185, 91, 0.34);
   background:
+    linear-gradient(90deg, rgba(229, 185, 91, 0.06), transparent 12% 88%, rgba(46, 169, 159, 0.05)),
     linear-gradient(180deg, rgba(255, 239, 190, 0.08), rgba(255, 239, 190, 0.03)),
     rgba(16, 11, 8, 0.78);
-  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.36);
+  box-shadow:
+    0 22px 70px rgba(0, 0, 0, 0.38),
+    inset 0 0 0 1px rgba(255, 240, 186, 0.04);
   backdrop-filter: blur(16px);
 }
 
@@ -684,12 +700,16 @@ input {
 .tool-button:hover,
 .header-actions a:hover {
   border-color: rgba(46, 169, 159, 0.74);
-  background: rgba(46, 169, 159, 0.14);
+  background:
+    linear-gradient(135deg, rgba(46, 169, 159, 0.2), transparent 48%),
+    rgba(46, 169, 159, 0.14);
 }
 
 .tool-button[aria-pressed="true"] {
   border-color: rgba(242, 141, 46, 0.82);
-  background: rgba(242, 141, 46, 0.18);
+  background:
+    linear-gradient(135deg, rgba(242, 141, 46, 0.24), transparent 48%),
+    rgba(242, 141, 46, 0.18);
 }
 
 .scripture-panel.book-active .scripture-content {
@@ -864,10 +884,13 @@ input {
   aspect-ratio: 1;
   place-items: center;
   border: 1px solid rgba(229, 185, 91, 0.44);
-  border-radius: 50%;
+  border-radius: 0;
   color: #ffe9ad;
-  background: rgba(18, 10, 6, 0.74);
+  background:
+    linear-gradient(135deg, rgba(255, 232, 164, 0.12), transparent 44%),
+    rgba(18, 10, 6, 0.78);
   box-shadow: 0 12px 26px rgba(0, 0, 0, 0.26);
+  clip-path: polygon(11px 0, calc(100% - 11px) 0, 100% 11px, 100% calc(100% - 11px), calc(100% - 11px) 100%, 11px 100%, 0 calc(100% - 11px), 0 11px);
   font-family: Georgia, serif;
   font-size: 2.1rem;
   cursor: pointer;
@@ -887,6 +910,7 @@ input {
   display: flex;
   align-items: center;
   gap: 14px;
+  flex-wrap: wrap;
   margin-top: 16px;
   color: rgba(242, 223, 179, 0.86);
   font-family: var(--ritual-font);
@@ -894,7 +918,7 @@ input {
 }
 
 .book-progress {
-  flex: 1;
+  flex: 1 1 180px;
   height: 5px;
   overflow: hidden;
   border: 1px solid rgba(229, 185, 91, 0.28);
@@ -907,6 +931,27 @@ input {
   height: 100%;
   background: linear-gradient(90deg, var(--turquoise), var(--gold), var(--orange));
   box-shadow: 0 0 14px rgba(242, 141, 46, 0.6);
+}
+
+.book-return {
+  min-height: 38px;
+  border: 1px solid rgba(229, 185, 91, 0.42);
+  border-radius: 0;
+  padding: 0 14px;
+  color: #ffe9ad;
+  background:
+    linear-gradient(135deg, rgba(242, 141, 46, 0.18), transparent 48%),
+    rgba(18, 10, 6, 0.72);
+  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  box-shadow: inset 0 0 0 1px rgba(255, 240, 186, 0.05);
+  cursor: pointer;
+}
+
+.book-return:hover {
+  border-color: rgba(46, 169, 159, 0.74);
+  background:
+    linear-gradient(135deg, rgba(46, 169, 159, 0.2), transparent 48%),
+    rgba(46, 169, 159, 0.14);
 }
 
 @keyframes turnNext {
@@ -1175,6 +1220,10 @@ input {
   .page-turn {
     width: 42px;
     font-size: 1.72rem;
+  }
+
+  .book-return {
+    width: 100%;
   }
 
   .scripture-content h2 {
