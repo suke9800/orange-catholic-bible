@@ -14,6 +14,13 @@
   --line: rgba(229, 185, 91, 0.34);
   --shadow: rgba(5, 2, 0, 0.45);
   --reader-scale: 1;
+  --title-font:
+    "Cinzel Decorative",
+    "Noto Serif Display",
+    "Noto Serif KR",
+    "Noto Serif JP",
+    "Noto Serif SC",
+    serif;
 }
 
 * {
@@ -39,6 +46,30 @@ body {
     Georgia,
     serif;
   overflow-x: hidden;
+}
+
+html[data-language="ko"] {
+  --title-font: "Noto Serif KR", "Noto Serif Display", serif;
+}
+
+html[data-language="ja"] {
+  --title-font: "Noto Serif JP", "Noto Serif Display", serif;
+}
+
+html[data-language="zh-CN"] {
+  --title-font: "Noto Serif SC", "Noto Serif Display", serif;
+}
+
+html[data-language="ar"] {
+  --title-font: "Noto Naskh Arabic", "Noto Serif Display", serif;
+}
+
+html[data-language="hi"] {
+  --title-font: "Noto Serif Devanagari", "Noto Serif Display", serif;
+}
+
+html[data-language="ru"] {
+  --title-font: "Noto Serif Display", Georgia, serif;
 }
 
 body.focused .toc-panel,
@@ -247,6 +278,13 @@ input {
   font-weight: 800;
 }
 
+.brand-mark span:last-child {
+  max-width: min(42vw, 460px);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
 .brand-sigil {
   display: grid;
   width: 38px;
@@ -258,7 +296,7 @@ input {
   background:
     radial-gradient(circle, rgba(242, 141, 46, 0.42), rgba(8, 37, 61, 0.76)),
     var(--lapis);
-  font-family: Georgia, serif;
+  font-family: "Cinzel", Georgia, serif;
   font-size: 0.76rem;
 }
 
@@ -345,6 +383,7 @@ input {
 .hero-copy {
   position: relative;
   z-index: 2;
+  min-width: 0;
   width: min(1060px, 100%);
   text-align: center;
   text-shadow: 0 3px 20px rgba(0, 0, 0, 0.7);
@@ -361,11 +400,24 @@ input {
 }
 
 .hero h1 {
+  display: inline-block;
+  max-width: 100%;
   margin: 0;
-  color: #fff2c2;
-  font-size: clamp(3.1rem, 10vw, 9.4rem);
-  line-height: 1.02;
-  text-wrap: balance;
+  color: transparent;
+  background: linear-gradient(180deg, #fff8d8 0%, #f1c768 44%, #c7671f 76%, #fff0ba 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 1px rgba(73, 35, 11, 0.46);
+  font-family: var(--title-font);
+  font-size: clamp(2.8rem, 8.2vw, 7.6rem);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.96;
+  text-shadow:
+    0 2px 0 rgba(65, 29, 8, 0.7),
+    0 0 22px rgba(242, 141, 46, 0.58),
+    0 18px 44px rgba(0, 0, 0, 0.72);
+  white-space: nowrap;
 }
 
 .hero-line {

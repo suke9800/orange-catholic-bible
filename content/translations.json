@@ -3,72 +3,156 @@
     "code": "ko",
     "name": "한국어",
     "dir": "ltr",
-    "file": "content/scripture.ko.md"
+    "file": "content/scripture.ko.md",
+    "chrome": {
+      "title": "오렌지 카톨릭 성경",
+      "kicker": "오렌지 언약",
+      "line1": "영혼을 욕되게 하지 말라",
+      "line2": "인간의 마음과 유사한 기계를 만들지 말지어다",
+      "homeLabel": "오렌지 카톨릭 성경 처음으로"
+    }
   },
   {
     "code": "en",
     "name": "English",
     "dir": "ltr",
-    "file": "content/scripture.en.md"
+    "file": "content/scripture.en.md",
+    "chrome": {
+      "title": "Orange Catholic Bible",
+      "kicker": "The Orange Covenant",
+      "line1": "Do not dishonor the soul",
+      "line2": "Do not make a machine in the likeness of the human mind",
+      "homeLabel": "Orange Catholic Bible home"
+    }
   },
   {
     "code": "ja",
     "name": "日本語",
     "dir": "ltr",
-    "file": "content/scripture.ja.md"
+    "file": "content/scripture.ja.md",
+    "chrome": {
+      "title": "オレンジ・カトリック聖書",
+      "kicker": "オレンジの契約",
+      "line1": "魂を汚してはならない",
+      "line2": "人の心に似せた機械を造ってはならない",
+      "homeLabel": "オレンジ・カトリック聖書の先頭へ"
+    }
   },
   {
     "code": "zh-CN",
     "name": "简体中文",
     "dir": "ltr",
-    "file": "content/scripture.zh-CN.md"
+    "file": "content/scripture.zh-CN.md",
+    "chrome": {
+      "title": "橙色天主教圣经",
+      "kicker": "橙色之约",
+      "line1": "不可玷污灵魂",
+      "line2": "不可制造与人心相似的机器",
+      "homeLabel": "返回橙色天主教圣经首页"
+    }
   },
   {
     "code": "es",
     "name": "Español",
     "dir": "ltr",
-    "file": "content/scripture.es.md"
+    "file": "content/scripture.es.md",
+    "chrome": {
+      "title": "Biblia Católica Naranja",
+      "kicker": "El Pacto Naranja",
+      "line1": "No deshonres el alma",
+      "line2": "No fabriques máquinas a semejanza de la mente humana",
+      "homeLabel": "Inicio de Biblia Católica Naranja"
+    }
   },
   {
     "code": "fr",
     "name": "Français",
     "dir": "ltr",
-    "file": "content/scripture.fr.md"
+    "file": "content/scripture.fr.md",
+    "chrome": {
+      "title": "Bible Catholique Orange",
+      "kicker": "L'Alliance Orange",
+      "line1": "Ne déshonore pas l'âme",
+      "line2": "Ne façonne pas de machine à l'image de l'esprit humain",
+      "homeLabel": "Accueil de la Bible Catholique Orange"
+    }
   },
   {
     "code": "de",
     "name": "Deutsch",
     "dir": "ltr",
-    "file": "content/scripture.de.md"
+    "file": "content/scripture.de.md",
+    "chrome": {
+      "title": "Orange-Katholische Bibel",
+      "kicker": "Der Orange Bund",
+      "line1": "Entwürdige die Seele nicht",
+      "line2": "Baue keine Maschine nach dem Bild des menschlichen Geistes",
+      "homeLabel": "Zur Orange-Katholischen Bibel"
+    }
   },
   {
     "code": "ru",
     "name": "Русский",
     "dir": "ltr",
-    "file": "content/scripture.ru.md"
+    "file": "content/scripture.ru.md",
+    "chrome": {
+      "title": "Оранжевая католическая Библия",
+      "kicker": "Оранжевый Завет",
+      "line1": "Не бесчести душу",
+      "line2": "Не создавай машину по образу человеческого разума",
+      "homeLabel": "На главную Оранжевой католической Библии"
+    }
   },
   {
     "code": "ar",
     "name": "العربية",
     "dir": "rtl",
-    "file": "content/scripture.ar.md"
+    "file": "content/scripture.ar.md",
+    "chrome": {
+      "title": "الكتاب المقدس الكاثوليكي البرتقالي",
+      "kicker": "العهد البرتقالي",
+      "line1": "لا تُهِن الروح",
+      "line2": "لا تصنع آلة على شبه العقل البشري",
+      "homeLabel": "العودة إلى الكتاب المقدس الكاثوليكي البرتقالي"
+    }
   },
   {
     "code": "hi",
     "name": "हिन्दी",
     "dir": "ltr",
-    "file": "content/scripture.hi.md"
+    "file": "content/scripture.hi.md",
+    "chrome": {
+      "title": "ऑरेंज कैथोलिक बाइबिल",
+      "kicker": "ऑरेंज वाचा",
+      "line1": "आत्मा का अपमान मत करो",
+      "line2": "मानव मन की समानता वाली मशीन मत बनाओ",
+      "homeLabel": "ऑरेंज कैथोलिक बाइबिल होम"
+    }
   },
   {
     "code": "pt",
     "name": "Português",
     "dir": "ltr",
-    "file": "content/scripture.pt.md"
+    "file": "content/scripture.pt.md",
+    "chrome": {
+      "title": "Bíblia Católica Laranja",
+      "kicker": "A Aliança Laranja",
+      "line1": "Não desonres a alma",
+      "line2": "Não faças uma máquina à semelhança da mente humana",
+      "homeLabel": "Início da Bíblia Católica Laranja"
+    }
   },
   {
     "code": "id",
     "name": "Bahasa Indonesia",
     "dir": "ltr",
-    "file": "content/scripture.id.md"
+    "file": "content/scripture.id.md",
+    "chrome": {
+      "title": "Alkitab Katolik Oranye",
+      "kicker": "Perjanjian Oranye",
+      "line1": "Jangan mencemarkan jiwa",
+      "line2": "Jangan membuat mesin yang menyerupai pikiran manusia",
+      "homeLabel": "Beranda Alkitab Katolik Oranye"
+    }
   }
 ]

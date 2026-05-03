@@ -9,6 +9,11 @@ const focusMode = document.getElementById("focusMode");
 const canvas = document.getElementById("sand-canvas");
 const languageSelect = document.getElementById("languageSelect");
 const languageSelectPanel = document.getElementById("languageSelectPanel");
+const heroTitle = document.getElementById("hero-title");
+const heroKicker = document.querySelector(".kicker");
+const heroLines = document.querySelectorAll(".hero-line");
+const brandLink = document.querySelector(".brand-mark");
+const brandTitle = document.querySelector(".brand-mark span:last-child");
 
 let readerScale = 1;
 let searchableBlocks = [];
@@ -169,6 +174,45 @@ function populateLanguageSelects() {
   });
 }
 
+function fitHeroTitle() {
+  if (!heroTitle) return;
+  heroTitle.style.fontSize = "";
+
+  const maxWidth = Math.max(
+    220,
+    Math.min(heroTitle.parentElement.clientWidth, window.innerWidth - 28) - 8
+  );
+  let currentSize = parseFloat(window.getComputedStyle(heroTitle).fontSize);
+  const minimumSize = window.innerWidth < 520 ? 18 : 28;
+  let attempts = 0;
+
+  while (heroTitle.scrollWidth > maxWidth && currentSize > minimumSize && attempts < 90) {
+    currentSize -= 1;
+    heroTitle.style.fontSize = `${currentSize}px`;
+    attempts += 1;
+  }
+}
+
+function applyLanguageChrome(language) {
+  const chrome = language.chrome || {};
+  const title = chrome.title || "오렌지 카톨릭 성경";
+
+  document.title = title;
+  document.documentElement.dataset.language = language.code;
+  heroTitle.textContent = title;
+  brandTitle.textContent = title;
+  brandLink.setAttribute("aria-label", chrome.homeLabel || `${title} home`);
+
+  if (chrome.kicker) heroKicker.textContent = chrome.kicker;
+  if (chrome.line1) heroLines[0].textContent = chrome.line1;
+  if (chrome.line2) heroLines[1].textContent = chrome.line2;
+
+  requestAnimationFrame(fitHeroTitle);
+  if (document.fonts) {
+    document.fonts.ready.then(fitHeroTitle);
+  }
+}
+
 function setLoading(label = "본문을 여는 중") {
   contentRoot.innerHTML = `
     <div class="loading-block">
@@ -214,6 +258,7 @@ async function loadScripture(languageCode = activeLanguage) {
   [languageSelect, languageSelectPanel].forEach((select) => {
     select.value = activeLanguage;
   });
+  applyLanguageChrome(language);
   setLoading(`${language.name} 본문을 여는 중`);
   contentRoot.setAttribute("dir", language.dir || "ltr");
   document.documentElement.lang = language.code;
@@ -276,6 +321,7 @@ searchInput.addEventListener("input", (event) => applySearch(event.target.value)
 languageSelect.addEventListener("change", (event) => loadScripture(event.target.value));
 languageSelectPanel.addEventListener("change", (event) => loadScripture(event.target.value));
 window.addEventListener("scroll", updateProgress, { passive: true });
+window.addEventListener("resize", fitHeroTitle, { passive: true });
 increaseText.addEventListener("click", () => setReaderScale(readerScale + 0.06));
 decreaseText.addEventListener("click", () => setReaderScale(readerScale - 0.06));
 focusMode.addEventListener("click", () => {
