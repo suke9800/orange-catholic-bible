@@ -15,7 +15,7 @@
       href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800&family=Cormorant+Garamond:wght@500;600;700&family=Noto+Naskh+Arabic:wght@500;600;700&family=Noto+Serif:wght@500;600;700;800&family=Noto+Serif+Devanagari:wght@500;600;700&family=Noto+Serif+Display:wght@700;900&family=Noto+Serif+JP:wght@500;700;900&family=Noto+Serif+KR:wght@500;700;900&family=Noto+Serif+SC:wght@500;700;900&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="styles.css?v=20260503-subtitle-title-style" />
+    <link rel="stylesheet" href="styles.css?v=20260503-book-reader" />
   </head>
   <body>
     <canvas id="sand-canvas" aria-hidden="true"></canvas>
@@ -55,7 +55,6 @@
           <span>𓂀</span><span>𓇳</span><span>𓊹</span><span>𓋹</span><span>𓉐</span>
         </div>
         <div class="hero-copy">
-          <p class="kicker">The Orange Covenant</p>
           <h1 id="hero-title">오렌지 카톨릭 성경</h1>
           <p class="hero-line">영혼을 욕되게 하지 말라</p>
           <p class="hero-line alt">인간의 마음과 유사한 기계를 만들지 말지어다</p>
@@ -97,11 +96,38 @@
             <button class="tool-button mode-button" id="focusMode" type="button" aria-pressed="false">
               집중
             </button>
+            <button class="tool-button mode-button" id="bookMode" type="button" aria-pressed="false">
+              책장
+            </button>
           </div>
           <div class="scripture-content" id="scriptureContent">
             <div class="loading-block">
               <span class="loading-sigil"></span>
               <p>본문을 여는 중</p>
+            </div>
+          </div>
+          <div class="book-reader" id="bookReader" hidden aria-live="polite">
+            <div class="book-stage">
+              <button class="page-turn page-turn-prev" id="bookPrev" type="button" aria-label="이전 페이지">
+                ‹
+              </button>
+              <div class="book-spread" id="bookSpread">
+                <section class="book-page book-page-left" aria-label="왼쪽 페이지">
+                  <div class="book-page-inner" id="bookPageLeft"></div>
+                </section>
+                <section class="book-page book-page-right" aria-label="오른쪽 페이지">
+                  <div class="book-page-inner" id="bookPageRight"></div>
+                </section>
+              </div>
+              <button class="page-turn page-turn-next" id="bookNext" type="button" aria-label="다음 페이지">
+                ›
+              </button>
+            </div>
+            <div class="book-footer">
+              <span id="bookPageIndicator">1 / 1</span>
+              <div class="book-progress" aria-hidden="true">
+                <span id="bookProgress"></span>
+              </div>
             </div>
           </div>
         </article>

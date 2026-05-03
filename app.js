@@ -6,6 +6,7 @@ const progressBar = document.getElementById("progressBar");
 const increaseText = document.getElementById("increaseText");
 const decreaseText = document.getElementById("decreaseText");
 const focusMode = document.getElementById("focusMode");
+const bookMode = document.getElementById("bookMode");
 const canvas = document.getElementById("sand-canvas");
 const languageSelect = document.getElementById("languageSelect");
 const languageSelectPanel = document.getElementById("languageSelectPanel");
@@ -14,10 +15,25 @@ const heroKicker = document.querySelector(".kicker");
 const heroLines = document.querySelectorAll(".hero-line");
 const brandLink = document.querySelector(".brand-mark");
 const brandTitle = document.querySelector(".brand-mark span:last-child");
+const scripturePanel = document.querySelector(".scripture-panel");
+const bookReader = document.getElementById("bookReader");
+const bookSpread = document.getElementById("bookSpread");
+const bookPageLeft = document.getElementById("bookPageLeft");
+const bookPageRight = document.getElementById("bookPageRight");
+const bookPrev = document.getElementById("bookPrev");
+const bookNext = document.getElementById("bookNext");
+const bookPageIndicator = document.getElementById("bookPageIndicator");
+const bookProgress = document.getElementById("bookProgress");
 
 let readerScale = 1;
 let searchableBlocks = [];
 let translations = [];
+let bookModeActive = false;
+let bookPages = [];
+let bookPageIndex = 0;
+let bookHeadingPages = new Map();
+let bookResizeTimer = 0;
+let touchStartX = 0;
 const requestedLanguage = new URLSearchParams(window.location.search).get("lang");
 let activeLanguage = requestedLanguage || localStorage.getItem("ocb-language") || "ko";
 
@@ -97,6 +113,7 @@ function renderMarkdown(markdown) {
     node.dataset.rawText = node.textContent || "";
   });
   observeHeadings();
+  buildBookPages({ reset: true });
 }
 
 function renderToc(toc) {
@@ -108,6 +125,173 @@ function renderToc(toc) {
       )}</a>`;
     })
     .join("");
+
+  tocRoot.querySelectorAll(".toc-link").forEach((link) => {
+    link.addEventListener("click", handleTocLinkClick);
+  });
+}
+
+function isCompactBook() {
+  return window.innerWidth <= 680;
+}
+
+function getPagesPerSpread() {
+  return isCompactBook() ? 1 : 2;
+}
+
+function splitBookText(text) {
+  const limit = isCompactBook() ? 260 : 470;
+  const chars = [...text.trim()];
+  if (chars.length <= limit) return [text.trim()];
+
+  const chunks = [];
+  let rest = text.trim();
+  while ([...rest].length > limit) {
+    const slice = [...rest].slice(0, limit).join("");
+    const softCuts = [" ", ".", ",", ";", ":", "?", "!", "。", "，", "、", "؟", "।"];
+    let cut = -1;
+    softCuts.forEach((mark) => {
+      cut = Math.max(cut, slice.lastIndexOf(mark));
+    });
+    if (cut < limit * 0.55) cut = slice.length;
+    chunks.push(rest.slice(0, cut).trim());
+    rest = rest.slice(cut).trim();
+  }
+  if (rest) chunks.push(rest);
+  return chunks;
+}
+
+function bookBlockCost(block) {
+  const length = [...block.text].length;
+  if (block.tag === "h2") return 260 + length * 2.1;
+  if (block.tag === "h3") return 135 + length * 1.6;
+  return 64 + length * 1.2;
+}
+
+function makeBookBlocks() {
+  return [...contentRoot.querySelectorAll("h2, h3, p, li")]
+    .flatMap((node) => {
+      const tagName = node.tagName.toLowerCase();
+      const text = (node.dataset.rawText || node.textContent || "").trim();
+      if (!text) return [];
+
+      if (tagName === "h2" || tagName === "h3") {
+        return [{ tag: tagName, text, sourceId: node.id || "" }];
+      }
+
+      return splitBookText(text).map((chunk, index) => ({
+        tag: "p",
+        text: chunk,
+        sourceId: index === 0 ? node.id || "" : "",
+        className: tagName === "li" ? "book-list-item" : "",
+      }));
+    });
+}
+
+function buildBookPages(options = {}) {
+  if (!bookReader) return;
+
+  const pageLimit = isCompactBook() ? 760 : 1040;
+  const pages = [];
+  const headingPages = new Map();
+  let page = [];
+  let pageCost = 0;
+
+  makeBookBlocks().forEach((block) => {
+    const cost = bookBlockCost(block);
+    if (page.length && pageCost + cost > pageLimit) {
+      pages.push(page);
+      page = [];
+      pageCost = 0;
+    }
+    if (block.sourceId) headingPages.set(block.sourceId, pages.length);
+    page.push(block);
+    pageCost += cost;
+  });
+
+  if (page.length) pages.push(page);
+  bookPages = pages.length ? pages : [[{ tag: "p", text: "본문을 여는 중", className: "" }]];
+  bookHeadingPages = headingPages;
+  if (options.reset) {
+    bookPageIndex = 0;
+  }
+  bookPageIndex = Math.min(bookPageIndex, Math.max(0, bookPages.length - 1));
+  renderBookSpread();
+}
+
+function renderBookBlock(block) {
+  const className = block.className ? ` class="${block.className}"` : "";
+  return `<${block.tag}${className}>${inlineMarkdown(block.text)}</${block.tag}>`;
+}
+
+function renderBookPage(target, page, pageNumber) {
+  const wrapper = target.closest(".book-page");
+  wrapper.classList.toggle("is-empty", !page);
+
+  if (!page) {
+    target.innerHTML = '<div class="book-page-empty">OC</div>';
+    return;
+  }
+
+  target.innerHTML = `${page.map(renderBookBlock).join("\n")}<span class="book-page-number">${pageNumber}</span>`;
+}
+
+function renderBookSpread() {
+  if (!bookReader) return;
+
+  const perSpread = getPagesPerSpread();
+  const rightPage = bookPageRight.closest(".book-page");
+  rightPage.hidden = perSpread === 1;
+
+  renderBookPage(bookPageLeft, bookPages[bookPageIndex], bookPageIndex + 1);
+  renderBookPage(bookPageRight, perSpread > 1 ? bookPages[bookPageIndex + 1] : null, bookPageIndex + 2);
+
+  const endPage = Math.min(bookPages.length, bookPageIndex + perSpread);
+  const label = perSpread > 1 && endPage > bookPageIndex + 1
+    ? `${bookPageIndex + 1}-${endPage} / ${bookPages.length}`
+    : `${bookPageIndex + 1} / ${bookPages.length}`;
+  bookPageIndicator.textContent = label;
+  bookProgress.style.width = `${(endPage / bookPages.length) * 100}%`;
+  bookPrev.disabled = bookPageIndex <= 0;
+  bookNext.disabled = endPage >= bookPages.length;
+}
+
+function turnBookPage(direction) {
+  const perSpread = getPagesPerSpread();
+  const nextIndex = Math.min(
+    Math.max(0, bookPageIndex + direction * perSpread),
+    Math.max(0, bookPages.length - 1)
+  );
+  if (nextIndex === bookPageIndex) return;
+
+  bookPageIndex = nextIndex;
+  bookSpread.classList.remove("turn-next", "turn-prev");
+  void bookSpread.offsetWidth;
+  bookSpread.classList.add(direction > 0 ? "turn-next" : "turn-prev");
+  renderBookSpread();
+  window.setTimeout(() => bookSpread.classList.remove("turn-next", "turn-prev"), 360);
+}
+
+function setBookMode(active) {
+  bookModeActive = active;
+  scripturePanel.classList.toggle("book-active", active);
+  bookReader.hidden = !active;
+  bookMode.setAttribute("aria-pressed", String(active));
+  bookMode.textContent = active ? "스크롤" : "책장";
+  if (active) {
+    buildBookPages();
+    bookReader.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+}
+
+function handleTocLinkClick(event) {
+  if (!bookModeActive) return;
+  const target = event.currentTarget.dataset.target;
+  if (!bookHeadingPages.has(target)) return;
+  event.preventDefault();
+  bookPageIndex = bookHeadingPages.get(target);
+  renderBookSpread();
+  bookReader.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
 function observeHeadings() {
@@ -203,7 +387,7 @@ function applyLanguageChrome(language) {
   brandTitle.textContent = title;
   brandLink.setAttribute("aria-label", chrome.homeLabel || `${title} home`);
 
-  if (chrome.kicker) heroKicker.textContent = chrome.kicker;
+  if (chrome.kicker && heroKicker) heroKicker.textContent = chrome.kicker;
   if (chrome.line1) heroLines[0].textContent = chrome.line1;
   if (chrome.line2) heroLines[1].textContent = chrome.line2;
 
@@ -322,11 +506,43 @@ languageSelect.addEventListener("change", (event) => loadScripture(event.target.
 languageSelectPanel.addEventListener("change", (event) => loadScripture(event.target.value));
 window.addEventListener("scroll", updateProgress, { passive: true });
 window.addEventListener("resize", fitHeroTitle, { passive: true });
+window.addEventListener("resize", () => {
+  if (!bookModeActive) return;
+  window.clearTimeout(bookResizeTimer);
+  bookResizeTimer = window.setTimeout(() => buildBookPages(), 160);
+}, { passive: true });
 increaseText.addEventListener("click", () => setReaderScale(readerScale + 0.06));
 decreaseText.addEventListener("click", () => setReaderScale(readerScale - 0.06));
 focusMode.addEventListener("click", () => {
   const focused = document.body.classList.toggle("focused");
   focusMode.setAttribute("aria-pressed", String(focused));
+});
+bookMode.addEventListener("click", () => setBookMode(!bookModeActive));
+bookPrev.addEventListener("click", () => turnBookPage(-1));
+bookNext.addEventListener("click", () => turnBookPage(1));
+bookSpread.addEventListener("click", (event) => {
+  if (!bookModeActive || event.target.closest("button, a, select, input")) return;
+  const rect = bookSpread.getBoundingClientRect();
+  turnBookPage(event.clientX < rect.left + rect.width / 2 ? -1 : 1);
+});
+bookSpread.addEventListener("touchstart", (event) => {
+  touchStartX = event.changedTouches[0].clientX;
+}, { passive: true });
+bookSpread.addEventListener("touchend", (event) => {
+  const delta = event.changedTouches[0].clientX - touchStartX;
+  if (Math.abs(delta) > 44) turnBookPage(delta < 0 ? 1 : -1);
+}, { passive: true });
+document.addEventListener("keydown", (event) => {
+  if (!bookModeActive) return;
+  if (event.target instanceof Element && event.target.closest("input, select, textarea")) return;
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    turnBookPage(-1);
+  }
+  if (event.key === "ArrowRight") {
+    event.preventDefault();
+    turnBookPage(1);
+  }
 });
 
 setupCanvas();
