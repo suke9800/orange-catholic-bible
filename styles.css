@@ -21,6 +21,27 @@
     "Noto Serif JP",
     "Noto Serif SC",
     serif;
+  --ritual-font:
+    "Cinzel",
+    "Noto Serif Display",
+    "Noto Serif KR",
+    "Noto Serif JP",
+    "Noto Serif SC",
+    serif;
+  --reader-font:
+    "Cormorant Garamond",
+    "Noto Serif",
+    "Noto Serif KR",
+    "Noto Serif JP",
+    "Noto Serif SC",
+    serif;
+  --reader-heading-font:
+    "Cinzel",
+    "Noto Serif Display",
+    "Noto Serif KR",
+    "Noto Serif JP",
+    "Noto Serif SC",
+    serif;
 }
 
 * {
@@ -50,26 +71,44 @@ body {
 
 html[data-language="ko"] {
   --title-font: "Noto Serif KR", "Noto Serif Display", serif;
+  --ritual-font: "Noto Serif KR", "Noto Serif Display", serif;
+  --reader-font: "Noto Serif KR", "Noto Serif", serif;
+  --reader-heading-font: "Noto Serif KR", "Noto Serif Display", serif;
 }
 
 html[data-language="ja"] {
   --title-font: "Noto Serif JP", "Noto Serif Display", serif;
+  --ritual-font: "Noto Serif JP", "Noto Serif Display", serif;
+  --reader-font: "Noto Serif JP", "Noto Serif", serif;
+  --reader-heading-font: "Noto Serif JP", "Noto Serif Display", serif;
 }
 
 html[data-language="zh-CN"] {
   --title-font: "Noto Serif SC", "Noto Serif Display", serif;
+  --ritual-font: "Noto Serif SC", "Noto Serif Display", serif;
+  --reader-font: "Noto Serif SC", "Noto Serif", serif;
+  --reader-heading-font: "Noto Serif SC", "Noto Serif Display", serif;
 }
 
 html[data-language="ar"] {
   --title-font: "Noto Naskh Arabic", "Noto Serif Display", serif;
+  --ritual-font: "Noto Naskh Arabic", "Noto Serif", serif;
+  --reader-font: "Noto Naskh Arabic", "Noto Serif", serif;
+  --reader-heading-font: "Noto Naskh Arabic", "Noto Serif Display", serif;
 }
 
 html[data-language="hi"] {
   --title-font: "Noto Serif Devanagari", "Noto Serif Display", serif;
+  --ritual-font: "Noto Serif Devanagari", "Noto Serif Display", serif;
+  --reader-font: "Noto Serif Devanagari", "Noto Serif", serif;
+  --reader-heading-font: "Noto Serif Devanagari", "Noto Serif Display", serif;
 }
 
 html[data-language="ru"] {
   --title-font: "Noto Serif Display", Georgia, serif;
+  --ritual-font: "Noto Serif", Georgia, serif;
+  --reader-font: "Noto Serif", Georgia, serif;
+  --reader-heading-font: "Noto Serif Display", "Noto Serif", Georgia, serif;
 }
 
 body.focused .toc-panel,
@@ -393,10 +432,13 @@ input {
 .panel-kicker {
   margin: 0 0 14px;
   color: var(--turquoise);
-  font-family: Georgia, serif;
+  font-family: var(--ritual-font);
   font-size: clamp(0.78rem, 1.2vw, 0.98rem);
-  font-weight: 700;
+  font-weight: 800;
   text-transform: uppercase;
+  text-shadow:
+    0 0 14px rgba(46, 169, 159, 0.5),
+    0 1px 0 rgba(0, 0, 0, 0.5);
 }
 
 .hero h1 {
@@ -422,16 +464,28 @@ input {
 
 .hero-line {
   margin: 24px auto 0;
-  color: #ffe7a6;
+  width: min(960px, 100%);
+  color: #ffeab0;
+  font-family: var(--ritual-font);
   font-size: clamp(1.22rem, 3vw, 2.4rem);
-  font-weight: 700;
+  font-weight: 800;
+  line-height: 1.2;
   text-wrap: balance;
+  text-shadow:
+    0 2px 0 rgba(57, 25, 8, 0.78),
+    0 0 18px rgba(242, 141, 46, 0.62),
+    0 12px 28px rgba(0, 0, 0, 0.62);
 }
 
 .hero-line.alt {
   margin-top: 12px;
-  color: #9ce1d7;
+  color: #a8efe4;
   font-size: clamp(1rem, 2vw, 1.55rem);
+  font-weight: 700;
+  text-shadow:
+    0 1px 0 rgba(7, 37, 38, 0.82),
+    0 0 16px rgba(46, 169, 159, 0.62),
+    0 10px 24px rgba(0, 0, 0, 0.6);
 }
 
 .glyph-band {
@@ -634,6 +688,10 @@ input {
 .scripture-content {
   padding: clamp(28px, 5vw, 68px);
   color: var(--ink);
+  font-family: var(--reader-font);
+  font-kerning: normal;
+  font-optical-sizing: auto;
+  text-rendering: optimizeLegibility;
   background:
     linear-gradient(90deg, rgba(75, 46, 19, 0.12) 1px, transparent 1px),
     linear-gradient(180deg, rgba(75, 46, 19, 0.1) 1px, transparent 1px),
@@ -659,7 +717,10 @@ input {
 .scripture-content h2,
 .scripture-content h3 {
   color: #3a1c0d;
+  font-family: var(--reader-heading-font);
+  font-weight: 800;
   text-wrap: balance;
+  text-shadow: 0 1px 0 rgba(255, 245, 210, 0.68);
 }
 
 .scripture-content h2 {
@@ -704,12 +765,26 @@ input {
 
 .scripture-content p,
 .scripture-content li {
-  font-size: calc(1.05rem * var(--reader-scale));
-  line-height: 2.05;
+  font-size: calc(1.12rem * var(--reader-scale));
+  font-weight: 500;
+  line-height: 2.08;
 }
 
 .scripture-content p {
   margin: 0 0 1.2em;
+}
+
+.scripture-content p:first-of-type::first-letter {
+  color: #783612;
+  font-family: var(--reader-heading-font);
+  font-size: 1.7em;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.scripture-content strong {
+  color: #5f2a0f;
+  font-weight: 800;
 }
 
 .scripture-content ol {
