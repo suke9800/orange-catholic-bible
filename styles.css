@@ -466,7 +466,7 @@ input {
   margin: 24px auto 0;
   width: min(960px, 100%);
   color: #ffeab0;
-  font-family: var(--ritual-font);
+  font-family: var(--title-font);
   font-size: clamp(1.22rem, 3vw, 2.4rem);
   font-weight: 800;
   line-height: 1.2;
