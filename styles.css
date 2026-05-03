@@ -463,29 +463,28 @@ input {
 }
 
 .hero-line {
+  display: block;
   margin: 24px auto 0;
   width: min(960px, 100%);
-  color: #ffeab0;
+  color: transparent;
+  background: linear-gradient(180deg, #fff8d8 0%, #f1c768 44%, #c7671f 76%, #fff0ba 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-stroke: 0.55px rgba(73, 35, 11, 0.62);
   font-family: var(--title-font);
   font-size: clamp(1.22rem, 3vw, 2.4rem);
-  font-weight: 800;
+  font-weight: 900;
   line-height: 1.2;
   text-wrap: balance;
   text-shadow:
-    0 2px 0 rgba(57, 25, 8, 0.78),
+    0 2px 0 rgba(65, 29, 8, 0.72),
     0 0 18px rgba(242, 141, 46, 0.62),
-    0 12px 28px rgba(0, 0, 0, 0.62);
+    0 14px 32px rgba(0, 0, 0, 0.68);
 }
 
 .hero-line.alt {
   margin-top: 12px;
-  color: #a8efe4;
   font-size: clamp(1rem, 2vw, 1.55rem);
-  font-weight: 700;
-  text-shadow:
-    0 1px 0 rgba(7, 37, 38, 0.82),
-    0 0 16px rgba(46, 169, 159, 0.62),
-    0 10px 24px rgba(0, 0, 0, 0.6);
 }
 
 .glyph-band {
